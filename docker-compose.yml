@@ -2,13 +2,15 @@ version: '3'
 
 services:
   db:
-    image: postgres:latest
+    image: postgres
     environment:
-      POSTGRES_DB: empresa
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: user123
+      POSTGRES_DB: tiendadb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
 
   web:
     build: .
@@ -20,11 +22,11 @@ services:
     depends_on:
       - db
     environment:
-      - DB_NAME=empresa
-      - DB_USER=user
-      - DB_PASSWORD=user123
+      - DB_NAME=tiendadb
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
       - DB_HOST=db
       - DB_PORT=5432
 
 volumes:
-  postgres_data:
+  db-data:
